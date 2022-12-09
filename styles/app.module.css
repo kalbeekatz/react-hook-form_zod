@@ -1,0 +1,24 @@
+.wrapper {
+  height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper form {
+  min-height: 400px;
+  width: 400px;
+}
+
+.wrapper p {
+  min-height: 1.5em;
+}
+
+.wrapper button {
+  background-color: blue;
+  color: white;
+}
+
+.wrapper button:disabled {
+  background-color: red;
+}
