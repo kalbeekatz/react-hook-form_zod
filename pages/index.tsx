@@ -2,7 +2,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-// const schema = z
+const baseSchema = z.object({
+  name: z.string(),
+});
+
+// merge ✗
+// and ○
+// const conditionalSchema = z
 //   .object({
 //     has_hobby: z.boolean(),
 //     hobby: z.string().optional(),
@@ -11,12 +17,18 @@ import { z } from "zod";
 //     if (has_hobby && !hobby) {
 //       ctx.addIssue({
 //         path: ["hobby"],
-//         code: z.ZodIssueCode.custom,
+//         code: z.ZodIssueCode.too_small,
+//         minimum: 1,
+//         type: "string",
+//         inclusive: false,
 //         message: "入力してください",
 //       });
 //     }
 //   });
-// const schema = z
+
+// merge ✗
+// and ○
+// const conditionalSchema = z
 //   .object({
 //     has_hobby: z.boolean(),
 //     hobby: z.string().optional(),
@@ -30,9 +42,12 @@ import { z } from "zod";
 //       });
 //     }
 //     // superRefine との違いは return で変換ができること
-//     return
+//     return;
 //   });
-// const schema = z
+
+// merge ✗
+// and ○
+// const conditionalSchema = z
 //   .object({
 //     has_hobby: z.literal(true),
 //     hobby: z.string().min(1, "入力してください"),
@@ -43,17 +58,10 @@ import { z } from "zod";
 //       hobby: z.string().optional(),
 //     })
 //   );
-const schema = z.union([
-  z.object({
-    has_hobby: z.literal(true),
-    hobby: z.string().min(1, "入力してください"),
-  }),
-  z.object({
-    has_hobby: z.literal(false),
-    hobby: z.string().optional(),
-  }),
-]);
-// const schema = z.discriminatedUnion("has_hobby", [
+
+// merge ✗
+// and ○
+// const conditionalSchema = z.union([
 //   z.object({
 //     has_hobby: z.literal(true),
 //     hobby: z.string().min(1, "入力してください"),
@@ -63,6 +71,29 @@ const schema = z.union([
 //     hobby: z.string().optional(),
 //   }),
 // ]);
+
+// merge ✗
+// and ○
+const conditionalSchema = z.discriminatedUnion("has_hobby", [
+  z.object({
+    has_hobby: z.literal(true),
+    hobby: z.string().min(1, "入力してください"),
+  }),
+  z.object({
+    has_hobby: z.literal(false),
+    hobby: z.string().optional(),
+  }),
+]);
+
+// merge ○
+// and ○
+// const conditionalSchema = z.object({
+//   has_hobby: z.boolean(),
+//   hobby: z.string().min(1, "入力してください"),
+// });
+const schemaMerge = baseSchema.merge(conditionalSchema);
+const schema = baseSchema.and(conditionalSchema);
+const schemaIntersection = z.intersection(baseSchema, conditionalSchema);
 type InputSchema = z.infer<typeof schema>;
 
 export default function Form() {
@@ -74,7 +105,7 @@ export default function Form() {
   } = useForm<InputSchema>({
     defaultValues: { has_hobby: false, hobby: "" },
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    mode: "onChange",
     shouldUnregister: true,
   });
   const has_hobby = watch("has_hobby");
@@ -84,27 +115,24 @@ export default function Form() {
 
   return (
     <form onSubmit={onSubmit}>
-      <p>
+      <label>
+        名前:
+        <br />
+        <input {...register("name")} />
+      </label>
+      <label>
+        <input type="checkbox" {...register("has_hobby")} />
+        犬が好き
+      </label>
+      {has_hobby && (
         <label>
-          <input type="checkbox" {...register("has_hobby")} />
-          チェックすると趣味の入力欄が表示されます
+          好きな犬種:
+          <br />
+          <input {...register("hobby")} />
+          <span>{errors.hobby?.message}</span>
         </label>
-      </p>
-      <p>
-        {has_hobby && (
-          <label>
-            趣味:
-            <input {...register("hobby")} />
-          </label>
-        )}
-      </p>
-      {/* <button disabled={!isValid}>送信</button> */}
-      <button>送信</button>
-      <p>バリデーションエラー: </p>
-      <ul>
-        <li>has_hobby: {errors.has_hobby?.message}</li>
-        <li>hobby: {errors.hobby?.message}</li>
-      </ul>
+      )}
+      <button disabled={!isValid}>送信</button>
     </form>
   );
 }

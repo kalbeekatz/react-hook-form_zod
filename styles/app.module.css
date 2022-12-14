@@ -5,20 +5,45 @@
   justify-content: center;
 }
 
-.wrapper form {
-  min-height: 400px;
-  width: 400px;
+.wrapper * {
+  box-sizing: border-box;
+  line-height: 1.6;
+  font-size: 1.2rem;
 }
 
-.wrapper p {
-  min-height: 1.5em;
+.wrapper form {
+  min-height: 18em;
+  width: 12em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.wrapper label {
+  margin-bottom: 2em;
+  position: relative;
+  width: 100%;
+}
+
+.wrapper input:not([type="checkbox"]) {
+  width: 100%;
+}
+
+.wrapper span {
+  color: red;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  font-size: 0.8em;
 }
 
 .wrapper button {
   background-color: blue;
   color: white;
+  margin-top: auto;
+  width: 100px;
 }
 
 .wrapper button:disabled {
-  background-color: red;
+  background-color: gray;
 }
