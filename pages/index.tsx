@@ -1,5 +1,6 @@
 import DiscriminatedUnion from "../src/Forms/DiscriminatedUnion";
 import Or from "../src/Forms/Or";
+import Refine from "../src/Forms/Refine";
 import SuperRefine from "../src/Forms/SuperRefine";
 import Transform from "../src/Forms/Transform";
 import Union from "../src/Forms/Union";
@@ -18,6 +19,10 @@ export default function Forms() {
       <div>
         <h1>Or</h1>
         <Or />
+      </div>
+      <div>
+        <h1>Refine</h1>
+        <Refine />
       </div>
       <div>
         <h1>SuperRefine</h1>

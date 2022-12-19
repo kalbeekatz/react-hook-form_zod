@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { InputSchema, schema } from "./schema";
 import Form from "../Form";
 
-export default function Or() {
+export default function Refine() {
   const {
     register,
     watch,

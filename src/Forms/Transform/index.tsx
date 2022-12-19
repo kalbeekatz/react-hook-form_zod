@@ -10,13 +10,13 @@ export default function Transform() {
     formState: { errors, isValid },
     handleSubmit,
   } = useForm<InputSchema>({
-    defaultValues: { name: "", has_hobby: false, hobby: "" },
+    defaultValues: { name: "", love_dog: false, type: "" },
     resolver: zodResolver(schema),
     mode: "onChange",
     shouldUnregister: true,
   });
 
-  const has_hobby = watch("has_hobby");
+  const love_dog = watch("love_dog");
 
   const onSubmit = handleSubmit((values) => {
     console.log(values);
@@ -26,8 +26,8 @@ export default function Transform() {
     <Form
       onSubmit={onSubmit}
       register={register}
-      has_hobby={has_hobby}
-      hobbyError={errors.hobby?.message}
+      love_dog={love_dog}
+      typeError={errors.type?.message}
       isValid={isValid}
     />
   );

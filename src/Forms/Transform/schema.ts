@@ -6,20 +6,20 @@ const baseSchema = z.object({
 
 const conditionalSchema = z
   .object({
-    has_hobby: z.boolean(),
-    hobby: z.string().optional(),
+    love_dog: z.boolean(),
+    type: z.string().optional(),
   })
-  .transform(({ has_hobby, hobby }, ctx) => {
-    if (has_hobby && !hobby) {
+  .transform(({ love_dog, type }, ctx) => {
+    if (love_dog && !type) {
       ctx.addIssue({
-        path: ["hobby"],
+        path: ["type"],
         code: z.ZodIssueCode.custom,
         message: "入力してください",
       });
     }
     return {
-      has_hobby,
-      hobby,
+      love_dog,
+      type,
     };
   });
 

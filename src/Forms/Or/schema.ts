@@ -6,13 +6,13 @@ const baseSchema = z.object({
 
 const conditionalSchema = z
   .object({
-    has_hobby: z.literal(true),
-    hobby: z.string().min(1, "入力してください"),
+    love_dog: z.literal(true),
+    type: z.string().min(1, "入力してください"),
   })
   .or(
     z.object({
-      has_hobby: z.literal(false),
-      hobby: z.string().optional(),
+      love_dog: z.literal(false),
+      type: z.string().optional(),
     })
   );
 

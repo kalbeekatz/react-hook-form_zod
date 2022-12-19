@@ -2,6 +2,8 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  max-width: 56em;
+  margin: 0 auto;
 }
 
 .wrapper * {
@@ -13,6 +15,7 @@
 .wrapper h1 {
   width: 14em;
   margin-top: 4em;
+  margin-bottom: 0;
   background: black;
   color: white;
   padding: 1em;
